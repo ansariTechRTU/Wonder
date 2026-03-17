@@ -52,6 +52,29 @@ app.get("/listings" , async (req, res)=>{
 
 
 
+
+//Create : New & Create Route
+//GET      /listings/new      -> form to submit by user to create listing
+//POST     /listings          -> here we will create listings by pushing in database
+
+
+app.get("/listings/new" , (req, res)=>{
+    res.render("listings/new.ejs");
+    
+});
+
+app.post("/listings" , async(req, res)=>{
+    const newListing = new Listings(req.body.listing);
+    await newListing.save();
+    res.redirect("/listings");
+
+});
+
+
+
+
+
+
 //Read - Show route
 //GET       /listings/:id      -> showing all data for particular based on id
 
@@ -66,11 +89,3 @@ app.get("/listings/:id" , async (req, res)=>{
 
 
 
-//Create : New & Create Route
-//GET      /listings/new      -> form to submit by user to create listing
-//POST     /listings          -> here we will create listings by pushing in database
-
-
-app.get("/listings/new" , (req, res)=>{
-    
-});
