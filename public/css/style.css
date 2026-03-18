@@ -117,3 +117,24 @@ min-height: 100vh;
     border: none !important;
 
 }
+
+
+
+/* show page */
+
+.show-img {
+    height: 30vh;
+}
+
+.delete-btn {
+    background-color: #fe424d !important;
+    border: none !important;
+
+}
+
+.edit-delete {
+    display: flex !important;
+    gap: 3rem !important;
+    align-items: center !important;
+
+}

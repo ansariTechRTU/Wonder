@@ -3,21 +3,68 @@
 
 
 <body>
-    <h3>Listing Details:</h3>
 
-    <ul>
-        <li><%= listing.title %></li>
-        <li><%= listing.description %></li>
-        <li><%= listing.price.toLocaleString("lv-LV", { style: "currency", currency: "EUR" }) %></li>
-        <li><%= listing.location %></li>
-        <li><%= listing.country %></li>
-    </ul>
-    <br /><br/>
-    <a href="/listings/<%=listing._id%>/edit">Edit this listing</a>
-<br><br>
+    <div class="row mt-3">
+        <div class="col-7 offset-2">
+    
+
+    
+
+    <div class="card col-10 offset-2">
+        <h3>Listing Details</h3><br>
+        <img src="<%=listing.image%>" class="card-img-top show-img" alt="listing image" >
+        
+        <div class="card-body">
+            <p class="card-text">
+               <b><%= listing.title %></b><br>
+               <%= listing.description %><br> 
+               <%= listing.price.toLocaleString("lv-LV", { style: "currency", currency: "EUR" }) %><br>
+               <%= listing.location %><br>
+               <%= listing.country %><br>
+            
+            </p>
+        </div>
+    </div>
+
+
+
+
+
+
+    <!-- <ul>
+        <li><%= //listing.title %></li>
+        <li><%= //listing.description %></li>
+        <li><%= //listing.price.toLocaleString("lv-LV", { style: "currency", currency: "EUR" }) %></li>
+        <li><%= //listing.location %></li>
+        <li><%= //listing.country %></li>
+    </ul> -->
+
+
+
+
+
+
+
+    
+
+    <div class="edit-delete">
+    
+    <a href="/listings/<%=listing._id%>/edit" class="btn btn-dark offset-2">Edit</a>
+    <br>
 
     <form method="POST" action="/listings/<%=listing._id%>?_method=DELETE">
-        <button>Delete this listing</button>
+        <button class="btn btn-dark delete-btn mt-4 offset-2">Delete</button> <br><br>
+
+
     </form>
+
+    </div>
     
+
+
+
+</div>
+</div>
+
+
 </body>
