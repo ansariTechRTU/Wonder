@@ -1,3 +1,7 @@
+
+
+//ERROR HANDLING-------------------------
+
 //Form Validations
 When we enter data in the form, the browser and/or web server will check
 to see that the data is in the correct format and within the constraints set by the application.
@@ -18,6 +22,29 @@ For custom Bootstrap form validation messages, you’ll need to add the novalida
 
 //Validation schema (for individual field)      - TOOL : JOI  (use to validate schema)
 https://www.npmjs.com/package/joi
+
+
+
+
+
+//Mongo $pull operator
+The $pull opeartor removes from an existing array all instances of a value that 
+match a specified consdition
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

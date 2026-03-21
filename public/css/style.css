@@ -69,7 +69,7 @@ min-height: 100vh;
 
 /* cards */
 
-.card {
+.listing-card {
     border: none !important;
     margin-bottom: 2rem;
 }
