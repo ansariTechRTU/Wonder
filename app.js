@@ -5,6 +5,8 @@ const path =require("path");
 const methodOverride= require("method-override");
 const ejsMate= require("ejs-mate");   
 const ExpressError = require("./utils/ExpressError.js");
+const session = require("express-session");
+const flash = require("connect-flash");
 
 
 
@@ -22,6 +24,23 @@ app.use(express.static(path.join(__dirname, "public")));
 
 
 
+const sessionOptions = {
+    secret: "verysecretkey",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        expires: Date.now() + 7 * 24 * 60 * 60 * 1000,   //num of milisecond in 1 week
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+        httpOnly: true,
+    },
+};
+
+app.use(session(sessionOptions));
+app.use(flash());
+
+
+
+
 
 main()
 .then(()=>{
@@ -36,6 +55,13 @@ async function main(){
 }
 
 
+app.use((req, res, next)=>{
+
+    res.locals.success = req.flash("success");
+    res.locals.error = req.flash("error");
+    next();
+
+});
 
 
 
