@@ -15,7 +15,7 @@ const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
     folder: 'Wonder_dev',
-    allowedFormat: ["png" , "jpg" , "jpeg"];
+    allowedFormat: ["png" , "jpg" , "jpeg"],
   },
 });
 
