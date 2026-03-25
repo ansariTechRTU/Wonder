@@ -37,8 +37,18 @@ match a specified consdition
 
 
 
+//MVC : Model, View , Controller
+Implement Design Pattern for Listings
+
+//---mention abt this in Project bullet points : implemented fullstack project using MVC framework
 
 
+
+
+
+
+//Router.Router
+//https://expressjs.com/en/5x/api.html#router.route
 
 
 
