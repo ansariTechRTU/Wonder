@@ -13,9 +13,16 @@ module.exports.renderNewForm = (req, res)=>{
 };    
 
 module.exports.createListing = async(req, res)=>{
+
+    let url = req.file.path;
+    let filename = req.file.filename;
+    
     const newListing = new Listings(req.body.listing);
 
     newListing.owner = req.user._id;            //saving new owner detail jus after creating listing
+    
+    newListing.image = {url, filename};
+    
     await newListing.save();
     req.flash("success" , "New listing created");
     res.redirect("/listings");

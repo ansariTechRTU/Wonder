@@ -53,9 +53,26 @@ Implement Design Pattern for Listings
 
 
 
+//Manipulating form
+enctype = "multipart/form-data"
+
+-> MULTER 
+https://www.npmjs.com/package/multer
+Multer is a node.js middleware for handling multipart/form-data
 
 
 
+//cloud setup 
+-cloudinary
+
+https://www.npmjs.com/package/dotenv
+
+
+https://www.npmjs.com/package/cloudinary
+npm i cloudinary
+
+https://www.npmjs.com/package/multer-storage-cloudinary
+npm install multer-storage-cloudinary --legacy-peer-deps
 
 
 
