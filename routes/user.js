@@ -4,6 +4,7 @@ const user = require("../models/user.js");
 const wrapAsync = require("../utils/wrapAsync");
 const { default: passportLocalMongoose } = require("passport-local-mongoose");
 const passport = require("passport");
+const { saveRedirectUrl } = require("../middleware.js");
 
 
 
@@ -16,14 +17,31 @@ router.get("/signup" , (req, res)=>{
 
 router.post("/signup" , wrapAsync(async(req, res)=>{
     
-    let {username, email, password} =req.body;
-    const newUser= new user({email, username});
+    try{
+        let {username, email, password} =req.body;
+        const newUser= new user({email, username});
 
-    const registeredUser = await user.register(newUser, password);
+        const registeredUser = await user.register(newUser, password);
 
-    req.flash("success" , "user registered, Welcome!");
-    res.redirect("/listings");
 
+
+        req.login(registeredUser, (err)=>{              //documentation passport
+
+            if(err){
+            return next(err);
+        }
+            
+            req.flash("success" , "user registered, Welcome!");
+            res.redirect("/listings");
+
+        });
+
+
+
+    }catch(err){
+        req.flash("error" , err.message);
+        res.redirect("/listings");
+    }
          
 
 }));
@@ -39,11 +57,15 @@ router.get("/login" , (req, res)=>{
 });
 
 router.post("/login",
-    passportauthenticate("local" , {failureRedirect : "/login" , failureFlash: true}),
+    saveRedirectUrl,
+    passport.authenticate("local" , {failureRedirect : "/login" , failureFlash: true}),
     async(req, res)=>{
 
     req.flash("success" , "welcome back to wonder");
-    res.redirect("/listings");
+
+    let redirectUrl= res.locals.redirectUrl || "/listings";
+
+    res.redirect(redirectUrl);
 
 
 });
@@ -52,6 +74,17 @@ router.post("/login",
 
 
 
+
+router.get("/logout" , (req, res)=>{
+    req.logout((err)=>{
+
+        if(err){
+            next(err);
+        }
+        req.flash("success" , "You are logged out");
+        res.redirect("/listings");
+    });
+});
 
 
 

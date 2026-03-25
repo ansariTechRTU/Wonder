@@ -74,6 +74,9 @@ app.use((req, res, next)=>{
 
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
+
+    res.locals.currUser = req.user;
+    
     next();
 
 });
@@ -81,19 +84,6 @@ app.use((req, res, next)=>{
 
 
 
-
-
-// app.get("/demouser" , async (req, res)=>{
-//     let fakeUser= new user({
-//         email:"something@gmail.com",
-//         username: "aandu-gaandu"
-//     });
-
-//     let registeredUser = await user.register(fakeUser, "password123");
-     
-//     res.send(registeredUser);
-
-// });
 
 
 

@@ -16,11 +16,15 @@
         
         <div class="card-body">
             <p class="card-text">
-               
-               <%= listing.description %><br> 
-               <%= listing.price.toLocaleString("lv-LV", { style: "currency", currency: "EUR" }) %><br>
-               <%= listing.location %><br>
-               <%= listing.country %><br>
+
+                <p class="card-text">Owned By: <i><%= listing.owner.username %></i> <br> </p>
+
+                <p class="card-text"> <%= listing.description %><br>  </p>
+                <p class="card-text"> <%= listing.price.toLocaleString("lv-LV", { style: "currency", currency: "EUR" }) %><br> </p>
+                <p class="card-text"> <%= listing.location %><br> </p>
+                <p class="card-text"> <%= listing.country %><br> </p>
+
+            
             
             </p>
         </div>
@@ -38,8 +42,8 @@
 
 
 
-
-
+    <% if(currUser && currUser._id.equals(listing.owner._id)) {%>
+    
     <div class="edit-delete">
     
     <a href="/listings/<%=listing._id%>/edit" class="btn btn-dark offset-2">Edit</a>
@@ -53,14 +57,22 @@
 
     </div>
 
+    <%}%>
+
+   
 
 
 
 
+
+  
 
 
     <div class="col-10 offset-2">
         <hr>
+
+        <% if(currUser) { %>
+
         <h4>Leave a review</h4>
 
         <form class="mb-3 needs-validation" method="POST" action="/listings/<%=listing._id%>/reviews" novalidate>
@@ -86,11 +98,12 @@
         </form>
 
 
+     <% } %>
 
 
 
 
-        <hr>
+
 
         <h4>All reviews</h4>
 
@@ -100,7 +113,7 @@
 
             <div class="card col-5 mb-3 mt-3 ms-3">
                 <div class="card-body">
-                    <h5 class="card-title">username</h5>
+                    <h5 class="card-title">@<%= review.author.username %></h5>
                     <p class="card-text"><%=review.comment%></p>
                     <p class="card-text"><%=review.rating%> <i class="fa-solid fa-star"></i></p>
                     
