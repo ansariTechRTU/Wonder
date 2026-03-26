@@ -77,3 +77,20 @@ npm install multer-storage-cloudinary --legacy-peer-deps
 
 
 
+
+
+
+
+//GEOCODING
+is the process of converting address into geographic coordinates.
+
+
+npm install @mapbox/mapbox-sdk
+https://github.com/mapbox/mapbox-sdk-js/blob/main/docs/services.md#forwardgeocode-1
+
+
+GeoJSON format mongoose
+https://mongoosejs.com/docs/geojson.html
+
+
+//Map marker
