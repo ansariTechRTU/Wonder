@@ -94,3 +94,37 @@ https://mongoosejs.com/docs/geojson.html
 
 
 //Map marker
+
+
+
+//for sessions : connect-mongo
+npm i connect-mongo
+
+
+The Problem — ESM vs CommonJS
+connect-mongo v6 is written in ES Module (ESM) format, which uses export default. But you're using require() which is CommonJS (CJS) format.
+When you require() an ESM module, Node.js wraps the entire module like this:
+javascript{
+  default: [the actual class],   // the real MongoStore
+  MongoStore: [class MongoStore],
+  createKrupteinAdapter: [...],
+  createWebCryptoAdapter: [...]
+}
+So require('connect-mongo') gives you the whole wrapper object, not the class itself. That's why .create didn't exist on it
+ — you were calling .create on the wrapper object, not on the actual MongoStore class.
+
+
+
+
+
+
+
+//Deployment
+
+before deployment on RENDER - in package.json :
+ add  "engines": {
+    "node": "22.16.0"
+
+  },
+
+

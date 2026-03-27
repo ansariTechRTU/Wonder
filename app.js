@@ -11,6 +11,8 @@ const methodOverride= require("method-override");
 const ejsMate= require("ejs-mate");   
 const ExpressError = require("./utils/ExpressError.js");
 const session = require("express-session");
+const MongoStore = require('connect-mongo').default; 
+
 const flash = require("connect-flash");
 const passport = require("passport");
 const localStrategy = require("passport-local");
@@ -33,8 +35,51 @@ app.use(express.static(path.join(__dirname, "public")));
 
 
 
+
+
+
+
+// const Mongo_Url ="mongodb://127.0.0.1:27017/wonder";   //local
+const dbUrl = process.env.ATLASDB_URL;    //atlas
+
+main()
+.then(()=>{
+    console.log("connect to db : wonder")
+})
+.catch((err)=>{
+    console.log(err);
+});
+
+async function main(){
+    await mongoose.connect(dbUrl);
+}
+
+
+
+
+
+
+
+
+
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    crypto: {
+        secret: process.env.SECRET,
+    },
+    touchAfter: 24 * 3600,   //in sec
+    ttl: 14 * 24 * 60 * 60 // = 14 days. Default
+
+});
+
+store.on("error" , (err)=>{
+    console.log("error in MONGO SESSION STORE" , err);
+});
+
+
 const sessionOptions = {
-    secret: "verysecretkey",
+    store,
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -49,6 +94,8 @@ app.use(flash());
 
 
 
+
+
 app.use(passport.initialize());   //to initializes passport
 app.use(passport.session());
 
@@ -58,22 +105,6 @@ passport.use(new localStrategy(user.authenticate()));
 //use static serialize and deserialize of model for passport session support
 passport.serializeUser(user.serializeUser());
 passport.deserializeUser(user.deserializeUser());
-
-
-
-
-main()
-.then(()=>{
-    console.log("connect to db : wonder")
-})
-.catch((err)=>{
-    console.log(err);
-});
-
-async function main(){
-    await mongoose.connect("mongodb://127.0.0.1:27017/wonder");
-}
-
 
 app.use((req, res, next)=>{
 
@@ -85,6 +116,18 @@ app.use((req, res, next)=>{
     next();
 
 });
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
