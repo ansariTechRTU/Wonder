@@ -23,7 +23,20 @@ min-height: 100vh;
 .nav-link{
     color: #222222 !important;  
     /* //if u want to override bootstrap styling */
+    border-radius: 25px !important;
+
+    
+
 }
+.nav-link:hover{
+    
+    background-color: #fe424d !important;
+    color: white !important;
+    
+    
+}
+
+
 
 
 
@@ -159,3 +172,23 @@ min-height: 100vh;
    border-radius: 50%;
    cursor: pointer;
  }
+
+
+
+
+
+
+ /* search in navbar */
+
+.search-btn {
+    background-color: #fe424d !important;
+    color: white !important;
+    border-radius: 25px !important;
+    padding: 0 1rem 0 1rem !important ;
+}
+
+.search-input {
+    border-radius: 25px !important;
+    padding: 0.5rem 3rem 0.5rem 3rem !important;
+    
+}
