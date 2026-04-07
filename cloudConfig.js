@@ -1,3 +1,4 @@
+//https://www.npmjs.com/package/multer-storage-cloudinary
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
@@ -20,7 +21,7 @@ const storage = new CloudinaryStorage({
 });
 
 
-module.exports = {
+module.exports = {    //used in routes/listing.js
     cloudinary,
     storage,
 }

@@ -15,12 +15,6 @@ const listingSchema = Joi.object({
 
 
 
-
-
-
-
-
-
 const reviewSchema = Joi.object({
 
     review: Joi.object({

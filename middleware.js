@@ -42,9 +42,9 @@ module.exports.validateReview = (req , res, next)=>{
 
 
 module.exports.isLoggedIn = (req, res, next)=>{
-    if(!req.isAuthenticated()){
+    if(!req.isAuthenticated()){ //passport
 
-        req.session.redirectUrl = req.originalUrl;  // saving redirect url which user want to access before login
+        req.session.redirectUrl = req.originalUrl;  // saving redirect url which user want to access before login-starts here
 
         req.flash("error" , "You must be logged in to create listing");
         return res.redirect("/login");
@@ -53,6 +53,7 @@ module.exports.isLoggedIn = (req, res, next)=>{
 };
 
 
+//this middleware is created to save redirectUrl in locals, as passport will reset the session after logging in
 module.exports.saveRedirectUrl = (req, res, next) => {
     if(req.session.redirectUrl){
         res.locals.redirectUrl= req.session.redirectUrl;

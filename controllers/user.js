@@ -14,7 +14,7 @@ module.exports.signUp = async(req, res)=>{
         let {username, email, password} =req.body;
         const newUser= new user({email, username});
 
-        const registeredUser = await user.register(newUser, password);
+        const registeredUser = await user.register(newUser, password);   //passport method 
 
 
 
@@ -33,7 +33,7 @@ module.exports.signUp = async(req, res)=>{
 
     }catch(err){
         req.flash("error" , err.message);
-        res.redirect("/listings");
+        res.redirect("/signup");
     }
          
 
@@ -54,7 +54,7 @@ module.exports.login = async(req, res)=>{
 
     req.flash("success" , "welcome back to wonder");
 
-    let redirectUrl= res.locals.redirectUrl || "/listings";
+    let redirectUrl= res.locals.redirectUrl || "/listings";   //if not then /listings
 
     res.redirect(redirectUrl);
 
@@ -64,7 +64,7 @@ module.exports.login = async(req, res)=>{
 
 
 module.exports.logout =(req, res)=>{
-    req.logout((err)=>{
+    req.logout((err)=>{    //passport
 
         if(err){
             next(err);

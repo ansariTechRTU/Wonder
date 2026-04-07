@@ -39,8 +39,8 @@ app.use(express.static(path.join(__dirname, "public")));
 
 
 
-// const Mongo_Url ="mongodb://127.0.0.1:27017/wonder";   //local
-const dbUrl = process.env.ATLASDB_URL;    //atlas
+const Mongo_Url ="mongodb://127.0.0.1:27017/wonder";   //local
+// const dbUrl = process.env.ATLASDB_URL;    //atlas
 
 main()
 .then(()=>{
@@ -51,7 +51,7 @@ main()
 });
 
 async function main(){
-    await mongoose.connect(dbUrl);
+    await mongoose.connect(Mongo_Url);
 }
 
 
@@ -63,7 +63,7 @@ async function main(){
 
 
 const store = MongoStore.create({
-    mongoUrl: dbUrl,
+    mongoUrl: Mongo_Url,
     crypto: {
         secret: process.env.SECRET,
     },
@@ -80,16 +80,17 @@ store.on("error" , (err)=>{
 const sessionOptions = {
     store,
     secret: process.env.SECRET,
-    resave: false,
-    saveUninitialized: true,
+    resave: false,   //by default
+    saveUninitialized: true, //""
     cookie: {
         expires: Date.now() + 7 * 24 * 60 * 60 * 1000,   //num of milisecond in 1 week
         maxAge: 7 * 24 * 60 * 60 * 1000,
         httpOnly: true,
     },
 };
-
 app.use(session(sessionOptions));
+
+
 app.use(flash());
 
 
@@ -106,24 +107,19 @@ passport.use(new localStrategy(user.authenticate()));
 passport.serializeUser(user.serializeUser());
 passport.deserializeUser(user.deserializeUser());
 
+
+
+//all values inside res.locals become directly accessible in EJS file.
 app.use((req, res, next)=>{
 
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
 
-    res.locals.currUser = req.user;
+    res.locals.currUser = req.user; 
     
     next();
 
 });
-
-
-
-
-
-
-
-
 
 
 

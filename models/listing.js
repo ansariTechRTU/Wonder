@@ -9,10 +9,10 @@ const listingSchema = new Schema({
         required: true,
     },
     description: String,
-    image: {
+    image: [{
         url: String,
         filename: String,
-    },
+    }],
     price: Number,
     location: String,
     country: String,
@@ -51,7 +51,7 @@ const listingSchema = new Schema({
 
 
 
-// post middleware
+// post middleware---//handling deletion , when listing is deleted , its review also 
 listingSchema.post("findOneAndDelete" , async(listing)=>{
 
     if(listing){

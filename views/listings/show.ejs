@@ -11,15 +11,58 @@
 
 <body>
 
-    <div class="row mt-3">
-        <div class="col-7 offset-2">
+    <div class="row mt-3 mx-auto">
+
+        <div class="col-10">
     
 
     
 
     <div class="card col-10 offset-2 listing-card">
         <h3><%= listing.title %></h3><br>
-        <img src="<%=listing.image.url%>" class="card-img-top show-img" alt="listing image" >
+
+        
+
+<div id="carouselExampleIndicators" class="carousel slide">
+   
+  <div class="carousel-indicators">
+    <% listing.image.forEach((el, i)=>{ %>
+    
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<%=i%>" class="<%= i === 0 ? 'active' : '' %>"></button>
+
+
+    <% }) %>
+    
+  </div>
+
+  <div class="carousel-inner">
+    <% listing.image.forEach((el, i)=>{ %>
+    <div class="carousel-item <%= i === 0 ? 'active' : '' %>">
+      <img src="<%=el.url%>" class="card-img-top show-img" alt="listing image" >
+    
+    </div>
+    <% }) %>
+  </div>
+
+
+  <% if(listing.image.length > 1) { %>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+    <% } %>
+</div>
+
+
+
+
+        
+        
+       
         
         <div class="card-body">
             <p class="card-text">

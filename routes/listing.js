@@ -9,7 +9,7 @@ const listingController = require("../controllers/listings.js");
 
 const multer  = require('multer');
 const {storage} =require("../cloudConfig.js");
-const upload = multer({ storage });
+const upload = multer({ storage });  //now multer will store our file at cloudinary
 
 
 
@@ -22,7 +22,7 @@ router.route("/")
     //POST     /listings          -> here we will create listings by pushing in database
     .post(isLoggedIn,
         validateListing,
-        upload.single('listing[image]'), 
+        upload.array('listing[image]' , 3), 
         wrapAsync( listingController.createListing ));
 
 

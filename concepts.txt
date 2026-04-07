@@ -6,6 +6,7 @@
 When we enter data in the form, the browser and/or web server will check
 to see that the data is in the correct format and within the constraints set by the application.
 
+//THEN used JOI for form validation of server side
 
 
 //For standardization
@@ -22,6 +23,7 @@ For custom Bootstrap form validation messages, you’ll need to add the novalida
 
 //Validation schema (for individual field)      - TOOL : JOI  (use to validate schema)
 https://www.npmjs.com/package/joi
+used JOI for form validation of server side
 
 
 
@@ -30,6 +32,246 @@ https://www.npmjs.com/package/joi
 //Mongo $pull operator
 The $pull opeartor removes from an existing array all instances of a value that 
 match a specified consdition
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//topics: 
+->Express Router
+->Cookies
+
+
+=>Express Router
+are a way to organize your Express application such
+that our primary app.js file doesnot become bloated
+
+const router= express.Router();
+
+
+
+
+//Cookies
+HTTP cookies are small block of data created by a web server while a user
+is browsing a website and place don the user's computer or other device by 
+the user's web browser
+
+app.get("/getcookies" , (req, res)=>{
+    res.cookie("greet" , "hello");
+})
+ 
+
+
+ //cookie parser
+ https://www.npmjs.com/package/cookie-parser
+
+
+
+
+
+//Signed Cookies
+Send signed cookie
+
+app.use(cookieParser("secretcode"));
+
+app.get("/getsignedcookies", (req, res)=>{
+    res.cookie("color" , "red" , {signed: true});
+    res.send("done!");
+});
+
+Verify Signed Cookie
+app.get("/verify" , (req, res)=>{
+    res.send(req.signedCookies);
+});
+
+
+
+
+
+
+
+//WHAT IS STATE
+
+//Stateful Protocol
+Stateful Protocol requires server to save the sttaus and session information
+eg- ftp
+
+//Stateless Protocol
+Stateless Protocol doesnot require the server to retain the server information 
+eg- https
+
+
+
+
+
+
+
+
+//EXPRESS SESSIONS
+An attemt to make our session stateful
+https://www.npmjs.com/package/express-session
+
+app.use(
+    session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+})
+
+);
+
+app.get("/register" (req, res)=>{
+    let {name} = req.query;
+    req.session.name= name;
+    res.send(name);
+});
+
+app.get("/hello" (req, res)=>{
+    res.send(`hello ${req.session.name}`);
+});
+
+
+
+
+
+
+
+
+//connect-flash
+The flash is a special area of the session used for storing messages.
+Messaged are written to the flash and cleared after being displayed to the user
+
+https://www.npmjs.com/package/connect-flash
+
+flash messages are stored in the session
+
+app.use(
+    session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+})
+
+);
+
+app.get("/register" (req, res)=>{
+    let {name} = req.query;
+    req.session.name= name;
+
+    req.flash("success" , "user registered succesfully");    //still we have to use views to flash this message
+
+
+    res.redirect("/hello");
+});
+
+app.get("/hello" (req, res)=>{
+
+    res.locals.messages =  req.flash("success");  // success is key to access msg
+    res.send("page.ejs" , {name: req.session.name });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+//----Authentication
+is the process of verifying who someone is
+
+
+
+
+//----Authorization
+is the process of verifying what specific applications, files, data a user has access to
+
+
+
+
+//Storing Password
+// we never store password as is , we store their hashed form
+
+
+//Hashing
+- for evry input , there is a fixed output
+- there are one-way functions, we cant get input from output
+- for diff input, there is different output but of same length
+- small changes in input should bring large changes in output
+
+
+//SHA256 , MD5, CRC, bcrypt
+
+
+
+
+//Salting
+Password salting is a technique to protect passwords stored in databases
+by adding a string of 32 or more characters and then hashing them.
+
+
+
+
+//Passport- is Express compatible authentication middleware for Node.js
+https://www.passportjs.org/
+
+npm i passport
+
+npm i passport-local
+https://www.npmjs.com/package/passport-local
+
+npm i passport-local-mongoose
+https://www.npmjs.com/package/passport-local-mongoose
+
+
+
+
+//Configuring strategy
+
+passport.initialize()
+-> a middleware that initializes passport
+
+passport.session()
+-> a web application needs the ability to identify users as they browse from page to page.
+The series of requests and response, each associated with the same user, is known as a session
+
+passport.use(new LocalStrategy(User.authenticate()))
+
+
+
+
+//in passport - pbkdf2 - hashing algorithm implemented
+
+
+
+
+
+//Connecting Login Router
+req.isAuthenticated   // passport method
+
+
+
+
+
+
+ejs me response.locals ko access kia jaskta tha , directly passport ke req.user ko nhi
 
 
 
@@ -53,12 +295,16 @@ Implement Design Pattern for Listings
 
 
 
+
+
+
 //Manipulating form
 enctype = "multipart/form-data"
 
 -> MULTER 
 https://www.npmjs.com/package/multer
 Multer is a node.js middleware for handling multipart/form-data
+->upload.single('listing[image]'),
 
 
 
@@ -66,7 +312,8 @@ Multer is a node.js middleware for handling multipart/form-data
 -cloudinary
 
 https://www.npmjs.com/package/dotenv
-
+Dotenv is a zero-dependency module that loads environment variables from a .env file into process.env.
+npm install dotenv
 
 https://www.npmjs.com/package/cloudinary
 npm i cloudinary
@@ -85,7 +332,7 @@ npm install multer-storage-cloudinary --legacy-peer-deps
 is the process of converting address into geographic coordinates.
 
 
-npm install @mapbox/mapbox-sdk
+npm install @mapbox/mapbox-sdk     
 https://github.com/mapbox/mapbox-sdk-js/blob/main/docs/services.md#forwardgeocode-1
 
 
